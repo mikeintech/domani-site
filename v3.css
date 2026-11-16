@@ -606,3 +606,11 @@ body.lit .h2-art{opacity:1;transform:none}
 [data-theme=light].hero2 .h2-tex .grain{opacity:.22}
 
 .hero2 .hero-bg .h2-tex img{display:block}
+
+/* era toggle: Hot Seat <-> Never Have I Ever */
+.era{display:flex;align-items:center;padding:3px;border-radius:999px;border:1px solid rgba(var(--line),.22);background:rgba(0,0,0,.25);backdrop-filter:blur(8px);margin-right:4px}
+.era a{padding:7px 12px;border-radius:999px;font:600 10px/1 var(--ui);letter-spacing:.16em;text-transform:uppercase;white-space:nowrap;opacity:.7;transition:.3s;color:inherit}
+.era a:hover{opacity:1}.era a.on{opacity:1;background:var(--gold);color:#1d0806}
+[data-theme=light] #nav.solid .era{background:rgba(255,255,255,.5)}
+@media (max-width:820px){.era a{padding:7px 9px;font-size:9px;letter-spacing:.1em}.era{margin-right:0}}
+@media (max-width:380px){.era a{padding:6px 7px;letter-spacing:.06em}}

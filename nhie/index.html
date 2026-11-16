@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Domani · Never Have I Ever</title>
+<script>document.documentElement.classList.add("hero3")</script>
+<script>try{document.documentElement.dataset.theme=localStorage.getItem("domani-theme")||"dark"}catch(e){document.documentElement.dataset.theme="dark"}</script>
+<link rel="icon" href="favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600;700&family=Mrs+Saint+Delafield&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="store.css?v=2">
+<link rel="stylesheet" href="v3.css?v=84">
+</head>
+<body class="locked">
+
+<!-- gate: one tap so the browser allows sound -->
+<div id="gate"><button id="enter"><span class="needle"></span>Tap to enter<small>Sound on</small></button></div>
+
+<header id="nav">
+  <a href="#top" class="logo"><img src="img/logo.svg?v=4" alt="Domani"></a>
+  <nav><a href="#single">Single</a><a href="#videos">Videos</a><a href="#shop">Shop</a><a href="#music">Music</a><a href="#tour">Tour</a><a href="#about">About</a></nav>
+  <div class="era" role="group" aria-label="Switch era"><a href="../hot.html">Hot Seat</a><a href="./" class=on aria-current=page>Never Have I Ever</a></div>
+  <button class="themebtn" id="themeBtn" aria-label="Switch to light mode"><svg class="moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg><svg class="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg></button>
+  <button class="bagbtn" data-open-cart aria-label="Open bag"><svg viewBox="0 0 24 24"><path d="M5 8h14l-1 13H6L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><i data-cart-count></i></button>
+</header>
+
+<main>
+<section id="top" class="hero">
+  <div class="hero-bg"><img src="img/projection-hotseat.jpg" alt="Domani in the Hot Seat, a room on fire"><img class="live" src="img/projection-hotseat.jpg" alt=""><div class="h2-tex" aria-hidden="true"><img class="t1" src="img/nhie-cover.jpg" alt=""><img class="t2" src="img/nhie-game.jpg" alt=""><img class="t3" src="img/nhie-candle.jpg" alt=""><img class="t4" src="img/f-headshot.jpg" alt=""><img class="t5" src="img/nhie-cover.jpg" alt=""><i class="grain"></i></div></div>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="heat" x="-5%" y="-5%" width="110%" height="110%">
+    <feTurbulence id="heatT" type="fractalNoise" baseFrequency="0.009 0.035" numOctaves="2" seed="3" result="n"/>
+    <feDisplacementMap id="heatD" in="SourceGraphic" in2="n" scale="26" xChannelSelector="R" yChannelSelector="G"/></filter></svg>
+  <div class="hero-glow"></div>
+  <canvas id="embers"></canvas>
+  <div class="h2-art" aria-hidden="true"><div class="h2-rec"><span></span></div><img src="img/nhie-cover.jpg" alt=""></div>
+  <div class="hero-c">
+    <h1 class="neon"><img class="lg-glow" src="img/logo-glow.svg?v=2" alt="Domani"><img class="lg-dark" src="img/logo-dark.svg?v=2" alt=""></h1>
+    <p class="script">Never Have I Ever</p>
+    <p class="kick">The new single &nbsp;—&nbsp; coming soon</p>
+    <div class="hero-cta"><a class="btn gold" href="#single">Play the game <span>→</span></a><a class="btn" href="#single-shop">Shop the single <span>→</span></a></div>
+  </div>
+  <div class="hero-tt" aria-hidden="true"><div class="tt-plane">
+    <div class="tt-mat"></div>
+    <div class="tt-rec"><span class="tt-lbl"><i></i></span></div>
+    <i class="tt-sheen"></i>
+  </div></div>
+  <div class="h3-scene" aria-hidden="true"><div class="h3-room">
+    <i class="h3-light"></i>
+    <div class="h3-rec"><div class="h3-vinyl"><span></span></div><img src="img/nhie-cover.jpg" alt=""></div>
+  </div></div>
+  <div class="h3-c">
+    <p class="h3-eye">The new single</p>
+    <h1 class="h3-t">Never Have I Ever</h1>
+    <p class="h3-p">The new single from Domani. A game of hot questions, played across the table to get to know the person in front of you.</p>
+    <div class="h3-cta"><a class="h3-b solid" href="#single">Play the game <span>▶</span></a><a class="h3-b" href="#videos">Watch video <span>▶</span></a></div>
+  </div>
+  <a href="#single" class="h3-down" aria-label="Scroll down"><svg viewBox="0 0 24 24"><path d="M12 4v15M5 12l7 7 7-7"/></svg></a>
+  <a href="#single" class="scrollcue">Scroll</a>
+</section>
+
+<section id="single" class="nhie">
+  <div class="story">
+    <div>
+      <p class="eyebrow">The new single</p>
+      <h2>&ldquo;Never Have I Ever&rdquo;</h2>
+      <p>The record started at a table. A few people, a deck of questions, nobody allowed to dodge. The game is simple: someone says something they've never done, and whoever has done it has to own it.</p>
+      <p>Domani wrote it about that moment across the table, when a hot question gets you closer to the person in front of you than a month of small talk ever could.</p>
+      <p class="q">Ask the question. Watch who flinches.</p>
+    </div>
+    <div class="deck" id="deck"><p class="hint">Tap the deck to draw</p></div>
+  </div>
+
+  <div id="single-shop" class="stage-wrap">
+    <div class="stage-head">
+      <p class="eyebrow center">Artist merchandise</p>
+      <h2 class="stage-h">Bring it to the table</h2>
+      <p class="stage-sub">The music, the objects, the world of Never Have I Ever &mdash;<br>collectible pieces from the Domani universe.</p>
+      <i class="stage-rule"></i>
+    </div>
+    <div class="stage-scroll"><div class="stage" id="stage">
+      <i class="beam"></i><i class="candle-light"></i>
+      <button class="obj o-game" data-p="0" aria-label="The Game"><span class="bx"><b>Never Have I Ever</b><small>The game of real confessions</small><em>Domani</em></span></button>
+      <button class="obj o-cd" data-p="1" aria-label="Album CD"><span class="bx"><b>Never Have I Ever</b><em>Domani</em></span></button>
+      <button class="obj o-tape" data-p="2" aria-label="Cassette"><span class="bx"><b>Never Have I Ever</b></span></button>
+      <button class="obj o-candle" data-p="3" aria-label="Mayumi candle"><img src="img/nhie-candle-cut.png?v=3" alt=""><i class="glow"></i><span class="smoke"><i></i><i></i><i></i></span><i class="flame"></i></button>
+    </div></div>
+    <div class="lineup" id="lineup">
+      <div class="li" data-p="0"><h3>The Game</h3><p>Never Have I Ever &mdash; Boxed Deck</p><span>$49.00</span><button class="buy">Buy <i>→</i></button></div>
+      <div class="li" data-p="1"><h3>Single (CD)</h3><p>Never Have I Ever</p><span>$14.00</span><button class="buy">Buy <i>→</i></button></div>
+      <div class="li" data-p="2"><h3>Cassette</h3><p>Limited Run &middot; Never Have I Ever</p><span>$12.00</span><button class="buy">Buy <i>→</i></button></div>
+      <div class="li" data-p="3"><h3>Mayumi Candle</h3><p>Limited Scent &middot; Coconut Soy 16oz</p><span>$28.00</span><button class="buy">Buy <i>→</i></button></div>
+    </div>
+    <p class="stage-note">The game is a deck of hot questions written around the single &mdash; read a card, and if you&rsquo;ve done it, you own it. Light the candle first.</p>
+  </div>
+
+  <div class="how">
+    <div><h4>Set the table</h4><p>Light the candle, put the single on, deal the deck face down.</p></div>
+    <div><h4>Read a card</h4><p>Take turns reading out loud: &ldquo;Never have I ever&hellip;&rdquo;</p></div>
+    <div><h4>Own it</h4><p>If you've done it, you say so. Then you tell the story.</p></div>
+    <div><h4>Get closer</h4><p>By the end of the deck, you know who's really sitting across from you.</p></div>
+  </div>
+</section>
+
+<section id="videos" class="sec">
+  <div class="row-h"><div><p class="eyebrow">Videos</p><h2 class="big">Visuals</h2></div><a class="sub" href="https://www.youtube.com/@domani" target="_blank" rel="noopener">View all →</a></div>
+  <div class="vids" id="vids"></div>
+</section>
+
+<section id="shop" class="sec">
+  <p class="eyebrow center">The official</p>
+  <h2 class="big center">Domani Shop</h2>
+  <p class="sub center">Merch &nbsp;/&nbsp; Vinyl &nbsp;/&nbsp; Apparel</p>
+  <div class="tabs" role="tablist">
+    <button class="on" data-f="all">Everything</button>
+    <button data-f="hot-seat">Hot Seat</button>
+    <button data-f="forever-lasting">Forever Lasting</button>
+    <button data-f="time-will-tell">Time Will Tell</button>
+  </div>
+  <div class="rail-wrap"><button class="arr l" aria-label="Previous">‹</button><div class="rail" id="rail"></div><button class="arr r" aria-label="Next">›</button></div>
+</section>
+
+<section id="music" class="sec">
+  <div class="row-h"><div><p class="eyebrow">Music</p><h2 class="big">The Catalog</h2></div><span class="sub">Tap a record to play it</span></div>
+  <div class="crate" id="crate"></div>
+  <div class="tracks" id="tracks"></div>
+</section>
+
+<section id="tour" class="sec tour">
+  <div class="tour-l">
+    <p class="eyebrow">Tour</p>
+    <h2 class="big">The Forever<br>Lasting Tour</h2>
+    <p class="sub">Live dates across North America</p>
+    <p class="hint">Pick a city on the ticket, then tear it off.</p>
+  </div>
+  <div class="ticket" id="ticket">
+    <div class="stub-top"><img src="img/wordmark.png" alt="Domani"><span class="script">The Forever Lasting Tour</span></div>
+    <ul id="dates"></ul>
+    <div class="stub-foot"><span id="tixPrice"></span><button class="btn red" id="tixBuy">Get tickets <span>→</span></button></div>
+    <div class="barcode"></div>
+  </div>
+</section>
+
+<section id="about" class="about">
+  <div class="portrait" id="portrait"><img src="img/f-headshot.jpg" alt="Domani"></div>
+  <div class="about-c">
+    <p class="eyebrow">About</p>
+    <p class="bio">Atlanta born, raised on his father's records and his own pen. Domani makes music that sounds like a room you never want to leave: <em>Time Will Tell</em>, <em>Forever Lasting</em>, and now <em>Hot Seat</em>.</p>
+  </div>
+  <div class="spray" id="spray"><img src="img/logo.svg?v=4" alt="Domani"></div>
+  <form class="signup" onsubmit="event.preventDefault();this.classList.add('done')"><input type="email" required placeholder="Enter email for updates" aria-label="Email"><button aria-label="Sign up">→</button><span class="thanks">You're on the list.</span></form>
+  <div class="social">
+    <a href="https://instagram.com/domaniharris" target="_blank" rel="noopener">Instagram</a>
+    <a href="https://www.youtube.com/@domani" target="_blank" rel="noopener">YouTube</a>
+    <a href="https://music.apple.com/us/artist/domani/" target="_blank" rel="noopener">Apple Music</a>
+    <a href="https://open.spotify.com/search/domani" target="_blank" rel="noopener">Spotify</a>
+  </div>
+  <p class="fine">© Domani. All rights reserved.</p>
+</section>
+</main>
+
+<!-- one player for the whole visit -->
+<div id="player">
+  <button class="p-art" id="pDisc" aria-label="Play or pause"><img id="pArt" src="img/nhie-cover.jpg" alt=""><i class="p-ico"></i></button>
+  <div class="p-meta"><b id="pT">Hot Seat</b><small id="pA">Domani</small></div>
+  <div class="p-ctl"><button id="pPrev" aria-label="Previous">⏮</button><button id="pPlay" aria-label="Play">▶</button><button id="pNext" aria-label="Next">⏭</button></div>
+  <div class="p-bar"><i id="pFill"></i></div>
+  <span class="p-time" id="pTime">0:00 / 0:30</span>
+</div>
+
+<div id="theater" role="dialog" aria-label="Video"><button class="x" aria-label="Close">×</button><div class="screen"><iframe id="tv" title="Domani video" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></div></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="store.js?v=2"></script>
+<script src="v3.js?v=30"></script>
+<script src="motion.js?v=4"></script>
+<script>
+(() => {
+  const C = ['Ghosted someone.', 'Had a situationship last longer than a relationship.', 'Flirted just for attention.', 'Talked to two people at the same time.', 'Fallen for someone on the first night.', 'Sent a text and instantly regretted it.', 'Stayed when I should have left.', 'Said I love you first.'], d = document.getElementById('deck'); let n = 0;
+  const mk = () => { const c = document.createElement('div'); c.className = 'card';
+    c.innerHTML = '<div class="bk"></div><div class="fr"><small>Never have I ever</small><b>' + C[n++ % C.length] + '</b><em>DOMANI</em></div>'; d.prepend(c); };
+  for (let i = 0; i < 3; i++) mk();
+  d.onclick = () => { const cs = d.querySelectorAll('.card'), top = cs[cs.length - 1];
+    if (!top.classList.contains('up')) { top.classList.add('up'); return; }
+    top.classList.add('gone'); setTimeout(() => top.remove(), 700); mk(); };
+  document.querySelectorAll('.notify').forEach(f => f.onsubmit = e => { e.preventDefault(); f.classList.add('ok'); f.querySelector('button').textContent = 'You\u2019re on the list'; f.querySelector('input').disabled = true; });
+})();
+</script>
+<script>
+(() => { const st = document.getElementById('stage'), lu = document.getElementById('lineup');
+  const hi = p => { st.querySelectorAll('.obj').forEach(o => o.classList.toggle('on', o.dataset.p === p)); lu.querySelectorAll('.li').forEach(o => o.classList.toggle('on', o.dataset.p === p)); };
+  [st, lu].forEach(r => r.querySelectorAll('[data-p]').forEach(o => { o.onmouseenter = () => hi(o.dataset.p); o.onmouseleave = () => hi(null); o.onfocus = () => hi(o.dataset.p); }));
+  st.querySelectorAll('.obj').forEach(o => o.onclick = () => { hi(o.dataset.p); lu.querySelector('[data-p="' + o.dataset.p + '"]').scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' }); });
+  const sc = st.parentNode; if (sc.scrollWidth > sc.clientWidth) sc.scrollLeft = 150;
+  lu.querySelectorAll('.buy').forEach(b => b.onclick = () => { b.classList.add('ok'); b.innerHTML = 'On the list ✓'; });
+})();
+</script>
+</body>
+</html>
