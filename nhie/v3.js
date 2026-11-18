@@ -157,7 +157,7 @@
     const first = p.variants.find(v => v.available) || p.variants[0];
     const vw = VIEWS[h], back = !!vw, sl = SLEEVE[h]; vc = sl ? vc : null;
     return `<article class="pc ${back ? 'has-b' : ''} ${vc ? 'vinyl' : ''}" style="animation-delay:${n * 60}ms;${vc ? '--vc:' + vc : ''}" data-h="${h}">
-      <a class="im" href="#/products/${h}" aria-label="${p.title}">${vc ? (h === 'time-will-tell-vinyls' ? '<i class="disc d2"></i>' : '') + '<i class="disc"></i>' : ''}<div class="flip">${sl ? `<img class="f sleeve" src="${sl}" alt="${p.title}" loading="lazy">` : `<img class="f" src="${FULL[h] ? `img/shop2/${h}-cut.webp?v=1` : `img/shop2/${h}-${vw ? vw[0] : 1}.webp`}" alt="${p.title}" loading="lazy">`}${back ? `<img class="b" src="img/shop2/${h}-${vw[1]}.webp" alt="" loading="lazy">` : ''}</div>${back ? '<span class="tag">Back</span>' : ''}</a>
+      <a class="im" href="#/products/${h}" aria-label="${p.title}">${vc ? (h === 'time-will-tell-vinyls' ? '<i class="disc d2"></i>' : '') + '<i class="disc"></i>' : ''}<div class="flip">${sl ? `<img class="f sleeve" src="${sl}" alt="${p.title}" loading="lazy">` : `<img class="f" src="${FULL[h] ? `img/shop2/${h}-cut.webp?v=2` : `img/shop2/${h}-${vw ? vw[0] : 1}.webp`}" alt="${p.title}" loading="lazy">`}${back ? `<img class="b" src="img/shop2/${h}-${vw[1]}.webp" alt="" loading="lazy">` : ''}</div>${back ? '<span class="tag">Back</span>' : ''}</a>
       <h3><a href="#/products/${h}">${p.title}</a></h3><div class="pr">${money(first.price)}</div>
       <div class="sz">${single ? '' : p.variants.map(v => `<button data-v="${v.id}" ${v.available ? '' : 'disabled'} class="${v === first ? 'on' : ''}">${short(v.title)}</button>`).join('')}</div>
       <button class="add2" data-add="${first.id}" ${first.available ? '' : 'disabled'}>Add to bag</button></article>`;
@@ -198,9 +198,11 @@
   const pdp = document.createElement('section'); pdp.id = 'pdp'; pdp.setAttribute('aria-label', 'Product'); document.body.appendChild(pdp);
   async function openProduct(h) {
     const P = await STORE.ready; await galReady; const p = P[h]; if (!p) return closeProduct();
-    const al = ALBUM_OF[h], A = ALBUMS[al], sl = SLEEVE[h], vc = sl && VC[h];
+    const al = ALBUM_OF[h], A = ALBUMS[al], sl = h === 'time-will-tell-vinyls' ? null : SLEEVE[h], vc = sl && VC[h];
     if (A) mood(al);
     let imgs = sl ? [sl] : (GAL[h] || [p.featured_image]).slice();
+    if (FULL[h]) imgs = [`img/shop2/${h}-cut.webp?v=2`];
+    if (h === 'time-will-tell-vinyls') imgs = ['img/shop2/time-will-tell-vinyls-1.webp']; // the real red + black pressing
     if (VIEWS[h]) { const f = `-${VIEWS[h][0]}.webp`; imgs.sort((x, y) => y.endsWith(f) - x.endsWith(f)); }
     const single = p.variants.length === 1 && p.variants[0].title === 'Default Title';
     let pick = p.variants.find(v => v.available) || p.variants[0], qty = 1;
