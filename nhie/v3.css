@@ -1095,3 +1095,15 @@ body.menu-open #nav{z-index:70}
   #shop .pc .sz{gap:4px;flex-wrap:wrap}#shop .pc .sz button{min-width:30px;height:28px;font-size:9px;padding:0 6px}
   #shop .pc .add2{padding:11px 6px;font-size:9px;letter-spacing:.14em}
 }
+/* gate, compact: candle sits centered over the form, fewer words */
+#gate .g-in{gap:14px;width:min(460px,90vw);text-align:center;padding:clamp(28px,6vh,60px) 0 28px}
+#enter{gap:8px}
+#enter .g-candle,#gate.lit #enter .g-candle{width:clamp(110px,17vh,170px);margin:0 auto 4px}
+#enter .g-tap{font-size:11px;letter-spacing:.38em}
+#gate .cap{max-width:none}
+#gate .cap h3{font-size:clamp(26px,3.4vw,34px);margin:0 0 6px}
+#gate .cap-s{font-size:13px;margin:0 0 14px;opacity:.7}
+#gate .cap-f{gap:8px}
+#gate .cap input[type=text],#gate .cap input[type=email],#gate .cap input[type=tel]{padding:12px 14px;font-size:14px}
+#gate .cap-f button{min-height:44px}
+#gate .cap-c{justify-content:center;font-size:10.5px;margin-top:10px}
