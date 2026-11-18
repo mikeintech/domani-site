@@ -1123,3 +1123,18 @@ body.menu-open #nav{z-index:70}
 #shop .tabs,.shop .tabs{justify-content:center;margin-left:auto;margin-right:auto;text-align:center}
 #shop .big,#shop .sub,#shop .eyebrow{text-align:center!important;margin-left:auto;margin-right:auto;justify-content:center}
 #shop .sub{margin-top:14px!important}
+/* Time Will Tell: red and black split vinyl */
+.pc.vinyl[data-h=time-will-tell-vinyls] .disc,.alb[data-alb=time-will-tell] .art .disc{background:radial-gradient(circle,#140906 0 2%,transparent 2.5% 30%,#111 31% 32%,transparent 33%),repeating-radial-gradient(circle,rgba(0,0,0,.28) 0 1.2px,transparent 1.2px 3px),#b0141b!important}
+/* Time Will Tell: two records, one red one black */
+.pc.vinyl[data-h=time-will-tell-vinyls] .disc.d2{z-index:-1;background:radial-gradient(circle,#140906 0 2%,#1a1a1a 2.5% 30%,#000 31% 32%,transparent 33%),conic-gradient(from 30deg,transparent 0 8%,rgba(255,255,255,.16) 12%,transparent 18% 50%,rgba(255,255,255,.1) 62%,transparent 68%),repeating-radial-gradient(circle,#2a2a2a 0 1.2px,#0a0a0a 1.2px 3px)!important}
+:is(#shop,#pdp) .pc.vinyl[data-h=time-will-tell-vinyls] .disc.d2{transform:translateX(30%)}
+:is(#shop,#pdp) .pc.vinyl[data-h=time-will-tell-vinyls]:hover .disc.d2{transform:translateX(50%) rotate(160deg)}
+/* Time Will Tell: the real pressing, one red one black, rolling out of the sleeve */
+.pc.vinyl[data-h=time-will-tell-vinyls] .disc{background:radial-gradient(circle,#140906 0 2%,#e3111a 2.5% 30%,#7a0a0e 31% 32%,transparent 33%),conic-gradient(from 30deg,transparent 0 8%,rgba(255,255,255,.28) 12%,transparent 18% 50%,rgba(255,255,255,.18) 62%,transparent 68%),repeating-radial-gradient(circle,#ff1f2a 0 1.2px,#d50c15 1.2px 3px)!important}
+:is(#shop,#pdp) .pc.vinyl[data-h=time-will-tell-vinyls] .disc{animation:twtRed 1.4s .3s cubic-bezier(.2,.8,.2,1) both}
+:is(#shop,#pdp) .pc.vinyl[data-h=time-will-tell-vinyls] .disc.d2{animation:twtBlack 1.6s .3s cubic-bezier(.2,.8,.2,1) both}
+@keyframes twtRed{from{transform:translateX(0) rotate(0)}to{transform:translateX(16%) rotate(240deg)}}
+@keyframes twtBlack{from{transform:translateX(0) rotate(0)}to{transform:translateX(34%) rotate(300deg)}}
+:is(#shop,#pdp) .pc.vinyl[data-h=time-will-tell-vinyls]:hover .disc{animation:none;transform:translateX(30%) rotate(420deg)}
+:is(#shop,#pdp) .pc.vinyl[data-h=time-will-tell-vinyls]:hover .disc.d2{animation:none;transform:translateX(52%) rotate(480deg)}
+.pc.vinyl[data-h=time-will-tell-vinyls] .disc.d2{box-shadow:0 0 0 1px rgba(255,255,255,.14),inset 0 0 0 1px rgba(255,255,255,.08)}

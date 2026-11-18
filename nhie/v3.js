@@ -132,7 +132,7 @@
     ['mayumi-candle-never-have-i-ever', 'nhie'], ['mayumi-candle-forever-lasting', 'nhie'],
     ['forever-lasting-tour-hoodie', 'forever-lasting'], ['hot-seat-vinyl-copy', 'hot-seat', '#a8604c'], ['the-king-s-succession-tour-t-shirt', 'hot-seat'],
     ['forever-lasting-tee-red', 'forever-lasting'], ['good-girl-tank', 'hot-seat'], ['forever-lasting-tape', 'forever-lasting', '#ddd6c8'],
-    ['domani-limited-tee', 'hot-seat'], ['forever-lasting-hoodie', 'forever-lasting'], ['time-will-tell-vinyls', 'time-will-tell', '#2f6a2a'],
+    ['domani-limited-tee', 'hot-seat'], ['forever-lasting-hoodie', 'forever-lasting'], ['time-will-tell-vinyls', 'time-will-tell', '#a3171c'],
     ['domani-woven-blanket', 'forever-lasting'], ['dear-jane-before-the-ink-dry-two-albums-one-vinyl-pre-order', 'time-will-tell', '#d8c9a8'],
   ];
   const VIEWS = { // single front / back shots, already cut out
@@ -157,7 +157,7 @@
     const first = p.variants.find(v => v.available) || p.variants[0];
     const vw = VIEWS[h], back = !!vw, sl = SLEEVE[h]; vc = sl ? vc : null;
     return `<article class="pc ${back ? 'has-b' : ''} ${vc ? 'vinyl' : ''}" style="animation-delay:${n * 60}ms;${vc ? '--vc:' + vc : ''}" data-h="${h}">
-      <a class="im" href="#/products/${h}" aria-label="${p.title}">${vc ? '<i class="disc"></i>' : ''}<div class="flip">${sl ? `<img class="f sleeve" src="${sl}" alt="${p.title}" loading="lazy">` : `<img class="f${FULL[h] ? ' full' : ''}" src="${FULL[h] ? p.featured_image : `img/shop2/${h}-${vw ? vw[0] : 1}.webp`}" alt="${p.title}" loading="lazy">`}${back ? `<img class="b" src="img/shop2/${h}-${vw[1]}.webp" alt="" loading="lazy">` : ''}</div>${back ? '<span class="tag">Back</span>' : ''}</a>
+      <a class="im" href="#/products/${h}" aria-label="${p.title}">${vc ? (h === 'time-will-tell-vinyls' ? '<i class="disc d2"></i>' : '') + '<i class="disc"></i>' : ''}<div class="flip">${sl ? `<img class="f sleeve" src="${sl}" alt="${p.title}" loading="lazy">` : `<img class="f${FULL[h] ? ' full' : ''}" src="${FULL[h] ? p.featured_image : `img/shop2/${h}-${vw ? vw[0] : 1}.webp`}" alt="${p.title}" loading="lazy">`}${back ? `<img class="b" src="img/shop2/${h}-${vw[1]}.webp" alt="" loading="lazy">` : ''}</div>${back ? '<span class="tag">Back</span>' : ''}</a>
       <h3><a href="#/products/${h}">${p.title}</a></h3><div class="pr">${money(first.price)}</div>
       <div class="sz">${single ? '' : p.variants.map(v => `<button data-v="${v.id}" ${v.available ? '' : 'disabled'} class="${v === first ? 'on' : ''}">${short(v.title)}</button>`).join('')}</div>
       <button class="add2" data-add="${first.id}" ${first.available ? '' : 'disabled'}>Add to bag</button></article>`;
