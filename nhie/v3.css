@@ -1138,3 +1138,6 @@ body.menu-open #nav{z-index:70}
 :is(#shop,#pdp) .pc.vinyl[data-h=time-will-tell-vinyls]:hover .disc{animation:none;transform:translateX(30%) rotate(420deg)}
 :is(#shop,#pdp) .pc.vinyl[data-h=time-will-tell-vinyls]:hover .disc.d2{animation:none;transform:translateX(52%) rotate(480deg)}
 .pc.vinyl[data-h=time-will-tell-vinyls] .disc.d2{box-shadow:0 0 0 1px rgba(255,255,255,.14),inset 0 0 0 1px rgba(255,255,255,.08)}
+/* merch: lighter brown backdrop */
+#shop{background:linear-gradient(180deg,#4a3127,#3b261d)!important}
+@media (max-width:700px){.o-candle{width:17%;left:64.2%}}
