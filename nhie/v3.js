@@ -134,7 +134,6 @@
     ['forever-lasting-tee-red', 'forever-lasting'], ['good-girl-tank', 'hot-seat'], ['forever-lasting-tape', 'forever-lasting', '#ddd6c8'],
     ['domani-limited-tee', 'hot-seat'], ['forever-lasting-hoodie', 'forever-lasting'], ['time-will-tell-vinyls', 'time-will-tell', '#2f6a2a'],
     ['domani-woven-blanket', 'forever-lasting'], ['dear-jane-before-the-ink-dry-two-albums-one-vinyl-pre-order', 'time-will-tell', '#d8c9a8'],
-    ['the-forever-lasting-tour-tickets', 'forever-lasting'],
   ];
   const VIEWS = { // single front / back shots, already cut out
     'forever-lasting-hoodie': [2, 3], 'forever-lasting-tee-red': [2, 3], 'forever-lasting-tour-hoodie': [2, 3], 'the-king-s-succession-tour-t-shirt': [1, 2] };
