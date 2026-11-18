@@ -614,3 +614,5 @@ body.lit .h2-art{opacity:1;transform:none}
 [data-theme=light] #nav.solid .era{background:rgba(255,255,255,.5)}
 @media (max-width:820px){.era a{padding:7px 9px;font-size:9px;letter-spacing:.1em}.era{margin-right:0}}
 @media (max-width:380px){.era a{padding:6px 7px;letter-spacing:.06em}}
+
+.entered #gate{display:none}

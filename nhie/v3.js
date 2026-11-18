@@ -33,13 +33,13 @@
   $$('[data-play]').forEach(b => (b.onclick = () => play(b.dataset.play, 0)));
 
   // ---------- dark / light ----------
-  const tb = $('#themeBtn'), setTheme = th => { document.documentElement.dataset.theme = th; tb.setAttribute('aria-label', th === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'); try { localStorage.setItem('domani-theme', th); } catch (e) {} };
+  const tb = $('#themeBtn'), setTheme = th => { document.documentElement.dataset.theme = th; tb.setAttribute('aria-label', th === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'); try { sessionStorage.setItem('nhie-theme', th); } catch (e) {} };
   setTheme(document.documentElement.dataset.theme || 'dark');
   tb.onclick = () => setTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark');
 
   // ---------- gate: the needle drops, the room ignites ----------
-  $('#enter').onclick = () => {
-    play('hot-seat', 0);
+  // tap lights the candle (no music until someone presses play), then join or walk in
+  const enterSite = () => { try { localStorage.setItem('domani-entered', '1'); } catch (e) {} setTimeout(() => window.ScrollTrigger && ScrollTrigger.refresh(), 350);
     $('#gate').classList.add('gone'); document.body.classList.remove('locked');
     setTimeout(() => document.body.classList.add('lit'), 250);
     // neon flicker by hand: animating opacity on the glowing logo paints a box in Chrome
@@ -48,6 +48,35 @@
     setTimeout(() => { n.style.animation = 'none'; n.style.clipPath = 'none'; }, 1800);
     setInterval(() => Math.random() < .5 && seq([[0, .35], [70, 1], [160, .6], [230, '']]), 4000);
   };
+  window.__enterSite = enterSite;
+  $('#enter').onclick = () => { const g = $('#gate'); if (g.classList.contains('lit')) return; g.classList.add('lit'); setTimeout(enterSite, 1500); };
+  // been here before: skip the gate. Already on the list: never ask again
+  try { if (localStorage.getItem('domani-joined')) window.__joined = true; if (localStorage.getItem('domani-entered')) enterSite(); } catch (e) {}
+
+  // ---------- hero record: play / pause ----------
+  $('#heroPlay').onclick = e => { e.stopPropagation(); toggle(); };
+  au.addEventListener('play', () => $('#heroPlay').setAttribute('aria-label', 'Pause'));
+  au.addEventListener('pause', () => $('#heroPlay').setAttribute('aria-label', 'Play'));
+
+  // ---------- burger menu ----------
+  const menu = $('#menu'), bg = $('#burger'), menuSet = on => { document.body.classList.toggle('menu-open', on); bg.setAttribute('aria-expanded', on); bg.setAttribute('aria-label', on ? 'Close menu' : 'Open menu'); menu.setAttribute('aria-hidden', !on); };
+  bg.onclick = () => menuSet(!document.body.classList.contains('menu-open'));
+  $$('#menu a').forEach(a => a.addEventListener('click', () => menuSet(false)));
+  addEventListener('keydown', e => e.key === 'Escape' && menuSet(false));
+
+  // ---------- email + SMS capture (stored locally until it's wired to the list) ----------
+  $$('form.cap').forEach(f => f.onsubmit = e => {
+    e.preventDefault();
+    const nm = f.fname.value.trim(), em = f.email.value.trim(), ph = f.phone.value.replace(/[^\d+]/g, ''), err = f.querySelector('.cap-e');
+    const okE = !em || /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em), okP = !ph || ph.replace(/\D/g, '').length >= 10;
+    err.textContent = !nm ? 'Add your first name.' : !em && !ph ? 'Add an email or a mobile number.' : !okE ? 'That email doesn\u2019t look right.' : !okP ? 'That number looks short.' : ph && !f.sms.checked ? 'Tick the box so we can text you.' : '';
+    if (err.textContent) return;
+    try { const L = JSON.parse(localStorage.getItem('domani-list') || '[]'); L.push({ name: nm, email: em, phone: ph, sms: !!ph, from: f.dataset.src, at: Date.now() }); localStorage.setItem('domani-list', JSON.stringify(L)); } catch (x) {}
+    window.__joined = true; try { localStorage.setItem('domani-joined', '1'); } catch (x) {} document.documentElement.classList.add('joined');
+    $$('form.cap').forEach(x => { x.classList.add('done'); x.querySelector('.cap-t').textContent = 'You’re at the table, ' + nm + '.'; });
+    if (f.dataset.src === 'gate') setTimeout(enterSite, 1400);
+    if (f.dataset.src === 'game') setTimeout(() => window.__dropCap && window.__dropCap(), 1800);
+  });
 
   // ---------- fire: the photo's own flames move, embers come off the real fire ----------
   const cv = $('#embers'), cx = cv.getContext('2d'); let P = [], SRC = [];
@@ -100,6 +129,7 @@
 
   // ---------- shop ----------
   const SHOP = [
+    ['mayumi-candle-never-have-i-ever', 'nhie'], ['mayumi-candle-forever-lasting', 'nhie'],
     ['forever-lasting-tour-hoodie', 'forever-lasting'], ['hot-seat-vinyl-copy', 'hot-seat', '#a8604c'], ['the-king-s-succession-tour-t-shirt', 'hot-seat'],
     ['forever-lasting-tee-red', 'forever-lasting'], ['good-girl-tank', 'hot-seat'], ['forever-lasting-tape', 'forever-lasting', '#ddd6c8'],
     ['domani-limited-tee', 'hot-seat'], ['forever-lasting-hoodie', 'forever-lasting'], ['time-will-tell-vinyls', 'time-will-tell', '#2f6a2a'],
@@ -148,6 +178,8 @@
 
   // ---------- product pages: #/products/<handle>, a full page over the site so the music keeps going ----------
   const DESC = {
+    'mayumi-candle-never-have-i-ever': 'Mayumi scented candle for the single. Coconut soy, 16oz, amber glass, in the brown Never Have I Ever box. Light it before the first card.',
+    'mayumi-candle-forever-lasting': 'Mayumi scented candle. Coconut soy, 16oz, amber glass, in the sand Forever Lasting box.',
     'forever-lasting-tour-hoodie': 'Heavyweight black hoodie from the Forever Lasting Tour. Every stop printed down the back.',
     'forever-lasting-hoodie': 'Heavyweight black hoodie with the Forever Lasting script across the back in red.',
     'forever-lasting-tee-red': 'Black cotton tee, Forever Lasting script in red on the back, small mark on the chest.',
@@ -223,7 +255,7 @@
   $$('#nav a').forEach(a => a.addEventListener('click', () => pdp.classList.contains('on') && leave()));
   $$('.tabs button').forEach(b => (b.onclick = () => {
     $$('.tabs button').forEach(x => x.classList.toggle('on', x === b)); buildShop(b.dataset.f);
-    if (b.dataset.f !== 'all') mood(b.dataset.f);
+    if (ALBUMS[b.dataset.f]) mood(b.dataset.f);
   }));
   $('.arr.l').onclick = () => rail.scrollBy({ left: -rail.clientWidth * 0.8, behavior: 'smooth' });
   $('.arr.r').onclick = () => rail.scrollBy({ left: rail.clientWidth * 0.8, behavior: 'smooth' });
@@ -244,15 +276,18 @@
   });
 
   // ---------- music crate ----------
-  $('#crate').innerHTML = Object.entries(ALBUMS).map(([k, a]) => `<button class="alb" data-alb="${k}" style="--vc:${a.c};--lbl:url(${a.art})">
+  const ALINK = k => (SONGS[k] && SONGS[k][0] ? SONGS[k][0].link.split('?')[0] : 'https://music.apple.com/us/artist/domani/');
+  songsReady.then(() => $$('.alb-l').forEach(l => (l.querySelector('.ap').href = ALINK(l.dataset.k))));
+  $('#crate').innerHTML = Object.entries(ALBUMS).map(([k, a]) => `<div class="alb-w"><button class="alb" data-alb="${k}" style="--vc:${a.c};--lbl:url(${a.art})">
     <div class="art"><i class="disc"></i><img src="${a.art}" alt="${a.t} cover"></div>
-    <div class="meta"><div><h3>${a.t}</h3><small>${a.k} · Domani</small></div><span class="pb">▶</span></div></button>`).join('');
+    <div class="meta"><div><h3>${a.t}</h3><small>${a.k} · Domani</small></div><span class="pb">▶</span></div></button>
+    <div class="alb-l" data-k="${k}"><a class="sp" href="https://open.spotify.com/search/${encodeURIComponent('Domani ' + a.t)}" target="_blank" rel="noopener" aria-label="${a.t} on Spotify"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm4.6 14.4a.6.6 0 0 1-.9.2c-2.4-1.5-5.4-1.8-9-1a.6.6 0 1 1-.3-1.2c3.9-.9 7.2-.5 9.9 1.1.3.2.4.6.3.9zm1.2-2.7a.8.8 0 0 1-1 .3c-2.7-1.7-6.9-2.2-10.1-1.2a.8.8 0 1 1-.5-1.5c3.7-1.1 8.3-.6 11.4 1.4.4.2.5.7.2 1zm.1-2.8C14.7 9 9.4 8.8 6.3 9.7a.9.9 0 1 1-.5-1.8c3.5-1.1 9.4-.9 13.1 1.3a.9.9 0 0 1-1 1.7z"/></svg><span>Spotify</span></a><a class="ap" href="https://music.apple.com/us/artist/domani/" target="_blank" rel="noopener" aria-label="${a.t} on Apple Music"><svg viewBox="0 0 24 24"><path d="M16.4 12.6c0-2.4 2-3.6 2.1-3.6-1.1-1.7-2.9-1.9-3.5-1.9-1.5-.2-2.9.9-3.7.9-.8 0-1.9-.9-3.2-.8-1.6 0-3.1 1-4 2.4-1.7 3-.4 7.4 1.2 9.8.8 1.2 1.8 2.5 3 2.4 1.2 0 1.7-.8 3.1-.8 1.5 0 1.9.8 3.2.8 1.3 0 2.2-1.2 3-2.4.9-1.4 1.3-2.7 1.3-2.8 0 0-2.5-1-2.5-4zM14 5.4c.7-.8 1.1-1.9 1-3-1 0-2.1.7-2.8 1.5-.6.7-1.2 1.8-1 2.9 1.1.1 2.1-.6 2.8-1.4z"/></svg><span>Apple Music</span></a></div></div>`).join('');
   reveal($$('.alb'));
   $('#crate').onclick = e => { const b = e.target.closest('.alb'); if (b) { if (cur.key === b.dataset.alb && !au.paused) toggle(); else play(b.dataset.alb, 0); } };
   function paintTracks() {
     $$('.alb').forEach(b => { const on = b.dataset.alb === cur.key; b.classList.toggle('on', on && !au.paused); b.querySelector('.pb').textContent = on && !au.paused ? '❚❚' : '▶'; });
     const list = SONGS[cur.key] || [];
-    $('#tracks').innerHTML = `<ol>${list.map((s, i) => `<li data-i="${i}" class="${i === cur.i ? 'on' : ''}"><b>${i + 1}</b><span>${s.t}</span><a href="${s.link}" target="_blank" rel="noopener" onclick="event.stopPropagation()">Full ↗</a></li>`).join('')}</ol>`;
+    $('#tracks').innerHTML = `<ol>${list.map((s, i) => `<li data-i="${i}" class="${i === cur.i ? 'on' : ''}"><b>${i + 1}</b><span>${s.t}</span><span class="lnk"><a href="https://open.spotify.com/search/${encodeURIComponent('Domani ' + s.t)}" target="_blank" rel="noopener" aria-label="Play ${s.t} on Spotify" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm4.6 14.4a.6.6 0 0 1-.9.2c-2.4-1.5-5.4-1.8-9-1a.6.6 0 1 1-.3-1.2c3.9-.9 7.2-.5 9.9 1.1.3.2.4.6.3.9zm1.2-2.7a.8.8 0 0 1-1 .3c-2.7-1.7-6.9-2.2-10.1-1.2a.8.8 0 1 1-.5-1.5c3.7-1.1 8.3-.6 11.4 1.4.4.2.5.7.2 1zm.1-2.8C14.7 9 9.4 8.8 6.3 9.7a.9.9 0 1 1-.5-1.8c3.5-1.1 9.4-.9 13.1 1.3a.9.9 0 0 1-1 1.7z"/></svg></a><a href="${s.link}" target="_blank" rel="noopener" aria-label="Play ${s.t} on Apple Music" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24"><path d="M16.4 12.6c0-2.4 2-3.6 2.1-3.6-1.1-1.7-2.9-1.9-3.5-1.9-1.5-.2-2.9.9-3.7.9-.8 0-1.9-.9-3.2-.8-1.6 0-3.1 1-4 2.4-1.7 3-.4 7.4 1.2 9.8.8 1.2 1.8 2.5 3 2.4 1.2 0 1.7-.8 3.1-.8 1.5 0 1.9.8 3.2.8 1.3 0 2.2-1.2 3-2.4.9-1.4 1.3-2.7 1.3-2.8 0 0-2.5-1-2.5-4zM14 5.4c.7-.8 1.1-1.9 1-3-1 0-2.1.7-2.8 1.5-.6.7-1.2 1.8-1 2.9 1.1.1 2.1-.6 2.8-1.4z"/></svg></a></span></li>`).join('')}</ol>`;
     $('#tracks').classList.add('on');
   }
   au.addEventListener('play', paintTracks); au.addEventListener('pause', paintTracks);

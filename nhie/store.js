@@ -8,7 +8,7 @@
   const asset = p => (window.ASSET ? window.ASSET(p) : p);
   const money = c => '$' + (c / 100).toFixed(2).replace(/\.00$/, '');
   let PRODUCTS = window.SHOPIFY_PRODUCTS || null;
-  const ready = PRODUCTS ? Promise.resolve(PRODUCTS) : fetch(asset('products.json')).then(r => r.json()).then(j => (PRODUCTS = j));
+  const ready = PRODUCTS ? Promise.resolve(PRODUCTS) : fetch(asset('products.json?v=3')).then(r => r.json()).then(j => (PRODUCTS = j));
 
   // ---------- cart: Shopify Ajax API, or a local stand-in with the same shape ----------
   const local = {

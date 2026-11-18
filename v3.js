@@ -39,7 +39,8 @@
 
   // ---------- gate: the needle drops, the room ignites ----------
   $('#enter').onclick = () => {
-    play('hot-seat', 0);
+    if (!window.__autoEnter) play('hot-seat', 0); // returning visitors walk straight in, music waits for a tap
+    try { localStorage.setItem('domani-entered', '1'); } catch (e) {}
     $('#gate').classList.add('gone'); document.body.classList.remove('locked');
     setTimeout(() => document.body.classList.add('lit'), 250);
     // neon flicker by hand: animating opacity on the glowing logo paints a box in Chrome
@@ -48,6 +49,8 @@
     setTimeout(() => { n.style.animation = 'none'; n.style.clipPath = 'none'; }, 1800);
     setInterval(() => Math.random() < .5 && seq([[0, .35], [70, 1], [160, .6], [230, '']]), 4000);
   };
+
+  try { if (localStorage.getItem('domani-entered')) { window.__autoEnter = 1; $('#enter').onclick(); window.__autoEnter = 0; } } catch (e) {}
 
   // ---------- fire: the photo's own flames move, embers come off the real fire ----------
   const cv = $('#embers'), cx = cv.getContext('2d'); let P = [], SRC = [];

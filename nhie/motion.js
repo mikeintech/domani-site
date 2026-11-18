@@ -8,6 +8,18 @@
   const ease = 'power3.out';
 
   // ---------- page over: the hero recedes while #videos slides up over it ----------
+  // Lenis smooth scroll, driven by GSAP's ticker so ScrollTrigger stays in sync
+  if (window.Lenis) { const lenis = window.lenis = new Lenis({ lerp: 0.1, smoothWheel: true });
+    lenis.on('scroll', ScrollTrigger.update); gsap.ticker.add(t => lenis.raf(t * 1000)); gsap.ticker.lagSmoothing(0);
+    document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', e => { const t = a.getAttribute('href'); if (t.length > 1 && document.querySelector(t)) { e.preventDefault(); lenis.scrollTo(t, { duration: 1.4 }); } })); }
+
+  // the single page: #single slides over the record hero
+  if (document.documentElement.classList.contains('hero3')) {
+    const o3 = { trigger: '#single', start: 'top bottom', end: 'top top', scrub: true };
+    gsap.fromTo('.h3-c', { yPercent: 0, opacity: 1 }, { scrollTrigger: o3, yPercent: -30, opacity: 0, ease: 'none', immediateRender: false });
+    gsap.fromTo('.h3-scene', { scale: 1, filter: 'brightness(1)', borderRadius: 0 }, { scrollTrigger: o3, scale: 0.92, filter: 'brightness(0.35)', borderRadius: 28, ease: 'none', immediateRender: false });
+    gsap.fromTo('#single', { '--lift': 0 }, { scrollTrigger: o3, '--lift': 1, ease: 'none' });
+  }
   const over = { trigger: '#videos', start: 'top bottom', end: 'top top', scrub: true };
   gsap.fromTo('.hero-c', { yPercent: 0, scale: 1, opacity: 1 }, { scrollTrigger: over, yPercent: -18, scale: 0.9, opacity: 0, ease: 'none', immediateRender: false });
   gsap.fromTo('.hero-tt', { y: 0, opacity: 1 }, { scrollTrigger: over, y: -80, opacity: 0, ease: 'none', immediateRender: false });
@@ -40,3 +52,4 @@
 
   addEventListener('load', () => ScrollTrigger.refresh());
 })();
+addEventListener('load', () => window.ScrollTrigger && ScrollTrigger.refresh());
