@@ -134,10 +134,13 @@
     ['forever-lasting-tee-red', 'forever-lasting'], ['good-girl-tank', 'hot-seat'], ['forever-lasting-tape', 'forever-lasting', '#ddd6c8'],
     ['domani-limited-tee', 'hot-seat'], ['forever-lasting-hoodie', 'forever-lasting'], ['time-will-tell-vinyls', 'time-will-tell', '#2f6a2a'],
     ['domani-woven-blanket', 'forever-lasting'], ['dear-jane-before-the-ink-dry-two-albums-one-vinyl-pre-order', 'time-will-tell', '#d8c9a8'],
+    ['the-forever-lasting-tour-tickets', 'forever-lasting'],
   ];
   const VIEWS = { // single front / back shots, already cut out
     'forever-lasting-hoodie': [2, 3], 'forever-lasting-tee-red': [2, 3], 'forever-lasting-tour-hoodie': [2, 3], 'the-king-s-succession-tour-t-shirt': [1, 2] };
   const SLEEVE = { 'hot-seat-vinyl-copy': 'img/sleeve-hot-seat.jpg', 'forever-lasting-tape': 'img/sleeve-forever-lasting.jpg', 'time-will-tell-vinyls': 'img/sleeve-time-will-tell.jpg' };
+  const FULL = { 'domani-woven-blanket': 1, 'dear-jane-before-the-ink-dry-two-albums-one-vinyl-pre-order': 1 }; // keep the photo's own background
+  const cat = h => /candle/.test(h) ? 'candles' : /ticket/.test(h) ? 'tickets' : /vinyl|tape/.test(h) ? 'vinyls' : 'apparel';
   const rail = $('#rail');
   function bagBump() { const b = $('.bagbtn'); b.classList.remove('bump'); void b.offsetWidth; b.classList.add('bump'); }
   function flyToBag(img) {
@@ -155,14 +158,14 @@
     const first = p.variants.find(v => v.available) || p.variants[0];
     const vw = VIEWS[h], back = !!vw, sl = SLEEVE[h]; vc = sl ? vc : null;
     return `<article class="pc ${back ? 'has-b' : ''} ${vc ? 'vinyl' : ''}" style="animation-delay:${n * 60}ms;${vc ? '--vc:' + vc : ''}" data-h="${h}">
-      <a class="im" href="#/products/${h}" aria-label="${p.title}">${vc ? '<i class="disc"></i>' : ''}<div class="flip">${sl ? `<img class="f sleeve" src="${sl}" alt="${p.title}" loading="lazy">` : `<img class="f" src="img/shop2/${h}-${vw ? vw[0] : 1}.webp" alt="${p.title}" loading="lazy">`}${back ? `<img class="b" src="img/shop2/${h}-${vw[1]}.webp" alt="" loading="lazy">` : ''}</div>${back ? '<span class="tag">Back</span>' : ''}</a>
+      <a class="im" href="#/products/${h}" aria-label="${p.title}">${vc ? '<i class="disc"></i>' : ''}<div class="flip">${sl ? `<img class="f sleeve" src="${sl}" alt="${p.title}" loading="lazy">` : `<img class="f${FULL[h] ? ' full' : ''}" src="${FULL[h] ? p.featured_image : `img/shop2/${h}-${vw ? vw[0] : 1}.webp`}" alt="${p.title}" loading="lazy">`}${back ? `<img class="b" src="img/shop2/${h}-${vw[1]}.webp" alt="" loading="lazy">` : ''}</div>${back ? '<span class="tag">Back</span>' : ''}</a>
       <h3><a href="#/products/${h}">${p.title}</a></h3><div class="pr">${money(first.price)}</div>
       <div class="sz">${single ? '' : p.variants.map(v => `<button data-v="${v.id}" ${v.available ? '' : 'disabled'} class="${v === first ? 'on' : ''}">${short(v.title)}</button>`).join('')}</div>
       <button class="add2" data-add="${first.id}" ${first.available ? '' : 'disabled'}>Add to bag</button></article>`;
   };
   async function buildShop(filter = 'all') {
     const P = await STORE.ready;
-    rail.innerHTML = SHOP.filter(([, a]) => filter === 'all' || a === filter).map((s, n) => card(P, s, n)).join('');
+    rail.innerHTML = SHOP.filter(([h]) => filter === 'all' || cat(h) === filter).map((s, n) => card(P, s, n)).join('');
     rail.scrollLeft = 0;
   }
   async function railClick(e) {

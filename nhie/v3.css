@@ -1107,3 +1107,16 @@ body.menu-open #nav{z-index:70}
 #gate .cap input[type=text],#gate .cap input[type=email],#gate .cap input[type=tel]{padding:12px 14px;font-size:14px}
 #gate .cap-f button{min-height:44px}
 #gate .cap-c{justify-content:center;font-size:10.5px;margin-top:10px}
+
+/* story: optional read-more */
+.story details.more summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:.7em;margin:.4em 0 1em;font:600 11px/1 var(--ui);letter-spacing:.24em;text-transform:uppercase;color:inherit;opacity:.8}
+.story details.more summary::-webkit-details-marker{display:none}
+.story details.more summary i{font-style:normal;display:inline-grid;place-items:center;width:24px;height:24px;border:1px solid currentColor;border-radius:50%;letter-spacing:0;transition:transform .3s}
+.story details.more[open] summary i{transform:rotate(45deg)}
+.story details.more[open] summary span::after{content:""}
+
+@media (max-width:700px){section.nhie{padding-top:36px!important}}
+.story details.more{margin-top:0!important}
+#gate .g-logo{display:block;width:clamp(110px,28vw,170px);height:auto;margin:0 auto 18px}
+#gate .g-logo{margin-bottom:clamp(34px,7vh,70px)}
+.pc .flip img.f.full{object-fit:cover;width:100%;height:100%;border-radius:inherit;filter:none;mix-blend-mode:normal}
