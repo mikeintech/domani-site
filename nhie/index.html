@@ -101,21 +101,9 @@
       <button class="obj o-candle unlit" data-p="3" aria-label="Mayumi candle, tap to light"><span class="tap-l"><b class="on-t">Tap to light</b><b class="off-t">Tap to blow out</b></span><img src="img/nhie-candle-cut.png?v=3" alt=""><i class="glow"></i><span class="smoke"><i></i><i></i><i></i></span><i class="flame"></i></button>
       <a class="cbuy" href="#/products/mayumi-candle-never-have-i-ever">Buy the candle <i>→</i></a>
     </div></div>
-    <div class="lineup" id="lineup">
-      <div class="li" data-p="0"><h3>The Game</h3><p>Never Have I Ever &mdash; Boxed Deck</p><span>$49.00</span></div>
-      <div class="li" data-p="1"><h3>Single (CD)</h3><p>Never Have I Ever</p><span>$14.00</span></div>
-      <div class="li" data-p="2"><h3>Cassette</h3><p>Limited Run &middot; Never Have I Ever</p><span>$12.00</span></div>
-      <div class="li" data-p="3"><h3>Mayumi Candle</h3><p>Limited Scent &middot; Coconut Soy 16oz</p><span>$28.00</span></div>
-    </div>
     <p class="stage-note">The game is a deck of hot questions written around the single &mdash; read a card, and if you&rsquo;ve done it, you own it. Light the candle first.</p>
   </div>
 
-  <div class="how">
-    <div><h4>Set the table</h4><p>Light the candle, put the single on, deal the deck face down.</p></div>
-    <div><h4>Read a card</h4><p>Take turns reading out loud: &ldquo;Never have I ever&hellip;&rdquo;</p></div>
-    <div><h4>Own it</h4><p>If you've done it, you say so. Then you tell the story.</p></div>
-    <div><h4>Get closer</h4><p>By the end of the deck, you know who's really sitting across from you.</p></div>
-  </div>
 </section>
 
 <section id="videos" class="sec">
@@ -221,9 +209,9 @@
 })();
 </script>
 <script>
-(() => { const st = document.getElementById('stage'), lu = document.getElementById('lineup');
+(() => { const st = document.getElementById('stage'), lu = document.getElementById('lineup') || document.createElement('div');
   const hi = p => { st.querySelectorAll('.obj').forEach(o => o.classList.toggle('on', o.dataset.p === p)); lu.querySelectorAll('.li').forEach(o => o.classList.toggle('on', o.dataset.p === p)); };
-  [st, lu].forEach(r => r.querySelectorAll('[data-p]').forEach(o => { o.onmouseenter = () => hi(o.dataset.p); o.onmouseleave = () => hi(null); o.onfocus = () => hi(o.dataset.p); }));
+  [st].forEach(r => r.querySelectorAll('[data-p]').forEach(o => { o.onmouseenter = () => hi(o.dataset.p); o.onmouseleave = () => hi(null); o.onfocus = () => hi(o.dataset.p); }));
   st.querySelectorAll('.obj').forEach(o => o.onclick = () => { hi(o.dataset.p); });
   const sc = st.parentNode; if (sc.scrollWidth > sc.clientWidth) sc.scrollLeft = 150;
   const cd = st.querySelector('.o-candle'); cd.addEventListener("click", () => { const u = cd.classList.toggle("unlit"); cd.setAttribute("aria-label", u ? "Mayumi candle, tap to light" : "Mayumi candle, tap to blow out"); });
