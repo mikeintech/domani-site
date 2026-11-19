@@ -6,14 +6,15 @@
 
   // ---------- albums + one shared player ----------
   const ALBUMS = {
+    'nhie': { t: 'Never Have I Ever', k: 'Single', art: 'img/nhie-cover.jpg', c: '#d39a83', d: '#3a1d15' },
     'hot-seat': { t: 'Hot Seat', k: 'Album', art: 'img/sleeve-hot-seat.jpg', c: '#a8604c', d: '#3a1d15' },
     'forever-lasting': { t: 'Forever Lasting', k: 'Album', art: 'img/sleeve-forever-lasting.jpg', c: '#c08a3a', d: '#4a2e0c' },
     'time-will-tell': { t: 'Time Will Tell', k: 'Album', art: 'img/sleeve-time-will-tell.jpg', c: '#3f7a3a', d: '#14290f' },
     'deep-cut': { t: 'Last Letter', k: 'EP', art: 'img/f-ink.jpg', c: '#8a6a9a', d: '#2a1a33' },
   };
-  let SONGS = {}; const songsReady = fetch('songs.json?v=2').then(r => r.json()).then(j => (SONGS = j));
+  let SONGS = {}; const songsReady = fetch('songs.json?v=3').then(r => r.json()).then(j => (SONGS = j));
   const au = new Audio(); au.preload = 'auto';
-  let cur = { key: 'hot-seat', i: 0 };
+  let cur = { key: 'nhie', i: 0 }; // the new single is what plays first
   const mood = key => { const a = ALBUMS[key]; root.setProperty('--acc', a.c); root.setProperty('--accd', a.d); };
   async function play(key, i = 0) {
     await songsReady; const list = SONGS[key]; if (!list) return;
@@ -287,7 +288,7 @@
   // ---------- music crate ----------
   const ALINK = k => (SONGS[k] && SONGS[k][0] ? SONGS[k][0].link.split('?')[0] : 'https://music.apple.com/us/artist/domani/');
   songsReady.then(() => $$('.alb-l').forEach(l => (l.querySelector('.ap').href = ALINK(l.dataset.k))));
-  $('#crate').innerHTML = Object.entries(ALBUMS).map(([k, a]) => `<div class="alb-w"><button class="alb" data-alb="${k}" style="--vc:${a.c};--lbl:url(${a.art})">
+  $('#crate').innerHTML = Object.entries(ALBUMS).filter(([k]) => k !== 'nhie').map(([k, a]) => `<div class="alb-w"><button class="alb" data-alb="${k}" style="--vc:${a.c};--lbl:url(${a.art})">
     <div class="art"><i class="disc"></i><img src="${a.art}" alt="${a.t} cover"></div>
     <div class="meta"><div><h3>${a.t}</h3><small>${a.k} · Domani</small></div><span class="pb">▶</span></div></button>
     <div class="alb-l" data-k="${k}"><a class="sp" href="https://open.spotify.com/search/${encodeURIComponent('Domani ' + a.t)}" target="_blank" rel="noopener" aria-label="${a.t} on Spotify"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm4.6 14.4a.6.6 0 0 1-.9.2c-2.4-1.5-5.4-1.8-9-1a.6.6 0 1 1-.3-1.2c3.9-.9 7.2-.5 9.9 1.1.3.2.4.6.3.9zm1.2-2.7a.8.8 0 0 1-1 .3c-2.7-1.7-6.9-2.2-10.1-1.2a.8.8 0 1 1-.5-1.5c3.7-1.1 8.3-.6 11.4 1.4.4.2.5.7.2 1zm.1-2.8C14.7 9 9.4 8.8 6.3 9.7a.9.9 0 1 1-.5-1.8c3.5-1.1 9.4-.9 13.1 1.3a.9.9 0 0 1-1 1.7z"/></svg><span>Spotify</span></a><a class="ap" href="https://music.apple.com/us/artist/domani/" target="_blank" rel="noopener" aria-label="${a.t} on Apple Music"><svg viewBox="0 0 24 24"><path d="M16.4 12.6c0-2.4 2-3.6 2.1-3.6-1.1-1.7-2.9-1.9-3.5-1.9-1.5-.2-2.9.9-3.7.9-.8 0-1.9-.9-3.2-.8-1.6 0-3.1 1-4 2.4-1.7 3-.4 7.4 1.2 9.8.8 1.2 1.8 2.5 3 2.4 1.2 0 1.7-.8 3.1-.8 1.5 0 1.9.8 3.2.8 1.3 0 2.2-1.2 3-2.4.9-1.4 1.3-2.7 1.3-2.8 0 0-2.5-1-2.5-4zM14 5.4c.7-.8 1.1-1.9 1-3-1 0-2.1.7-2.8 1.5-.6.7-1.2 1.8-1 2.9 1.1.1 2.1-.6 2.8-1.4z"/></svg><span>Apple Music</span></a></div></div>`).join('');
