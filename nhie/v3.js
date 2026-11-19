@@ -158,7 +158,7 @@
   window.__mayumi = h => MAYUMI + '#' + (CANDLE[h] ? CANDLE[h][2] : '');
   const candleCard = (h, n) => { const [t, pr, id] = CANDLE[h], u = MAYUMI + '#' + id;
     return `<article class="pc candle-link" style="animation-delay:${n * 60}ms" data-h="${h}">
-      <a class="im" href="${u}" target="_blank" rel="noopener" aria-label="${t}"><div class="flip"><img class="f" src="img/shop2/${h}-1.webp" alt="${t}" loading="lazy"></div></a>
+      <a class="im" href="${u}" target="_blank" rel="noopener" aria-label="${t}"><div class="flip"><img class="f" src="img/shop2/${h}-m1.webp" alt="${t}" loading="lazy"></div></a>
       <h3><a href="${u}" target="_blank" rel="noopener">${t}</a></h3><div class="pr">${money(pr)}</div><div class="sz"></div>
       <a class="add2" href="${u}" target="_blank" rel="noopener">Shop the candle ↗</a></article>`; };
   const card = (P, [h, a, vc], n) => {
