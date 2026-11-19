@@ -152,7 +152,17 @@
   }
   const ALBUM_OF = Object.fromEntries(SHOP.map(([h, a]) => [h, a])), VC = Object.fromEntries(SHOP.map(([h, , c]) => [h, c]));
   const short = s => ({ Small: 'S', Medium: 'M', Large: 'L', 'X-Large': 'XL', 'XX-Large': 'XXL' }[s] || s);
+  // Mayumi candles aren't sold in this store: they always show as available and link to the candle page
+  const MAYUMI = 'https://mikeintech.github.io/mayumi-candles/';
+  const CANDLE = { 'mayumi-candle-never-have-i-ever': ['Mayumi Candle · Never Have I Ever', 4500, 'nhie'], 'mayumi-candle-forever-lasting': ['Mayumi Candle · Forever Lasting', 4500, 'forever-lasting'] };
+  window.__mayumi = h => MAYUMI + '#' + (CANDLE[h] ? CANDLE[h][2] : '');
+  const candleCard = (h, n) => { const [t, pr, id] = CANDLE[h], u = MAYUMI + '#' + id;
+    return `<article class="pc candle-link" style="animation-delay:${n * 60}ms" data-h="${h}">
+      <a class="im" href="${u}" target="_blank" rel="noopener" aria-label="${t}"><div class="flip"><img class="f" src="img/shop2/${h}-1.webp" alt="${t}" loading="lazy"></div></a>
+      <h3><a href="${u}" target="_blank" rel="noopener">${t}</a></h3><div class="pr">${money(pr)}</div><div class="sz"></div>
+      <a class="add2" href="${u}" target="_blank" rel="noopener">Shop the candle ↗</a></article>`; };
   const card = (P, [h, a, vc], n) => {
+    if (CANDLE[h]) return candleCard(h, n);
     const p = P[h]; if (!p) return '';
     const single = p.variants.length === 1 && p.variants[0].title === 'Default Title';
     const first = p.variants.find(v => v.available) || p.variants[0];
@@ -198,6 +208,7 @@
   let GAL = {}; const galReady = fetch('gallery.json').then(r => r.json()).then(j => (GAL = j)).catch(() => {});
   const pdp = document.createElement('section'); pdp.id = 'pdp'; pdp.setAttribute('aria-label', 'Product'); document.body.appendChild(pdp);
   async function openProduct(h) {
+    if (CANDLE[h]) { history.replaceState('', '', location.pathname); window.open(MAYUMI + '#' + CANDLE[h][2], '_blank', 'noopener'); return; }
     const P = await STORE.ready; await galReady; const p = P[h]; if (!p) return closeProduct();
     const al = ALBUM_OF[h], A = ALBUMS[al], sl = h === 'time-will-tell-vinyls' ? null : SLEEVE[h], vc = sl && VC[h];
     if (A) mood(al);
