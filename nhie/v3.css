@@ -1185,3 +1185,4 @@ body.menu-open #nav{z-index:70}
 /* lit candle: the label becomes the buy button */
 .o-candle:not(.unlit) .tap-l{opacity:1;pointer-events:auto;background:#d39a83;color:#2b1610;border-color:transparent;font-weight:700;box-shadow:0 10px 24px rgba(0,0,0,.35)}
 .cbuy{display:none!important}
+.portrait img{object-position:50% 12%}
