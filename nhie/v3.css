@@ -1186,3 +1186,7 @@ body.menu-open #nav{z-index:70}
 .o-candle:not(.unlit) .tap-l{opacity:1;pointer-events:auto;background:#d39a83;color:#2b1610;border-color:transparent;font-weight:700;box-shadow:0 10px 24px rgba(0,0,0,.35)}
 .cbuy{display:none!important}
 .portrait img{object-position:50% 12%}
+
+/* performance: off-screen sections stop animating; filtered floaters get their own layer so they don't repaint */
+.offscreen, .offscreen *, .offscreen *::before, .offscreen *::after { animation-play-state: paused !important; }
+:is(#shop,#pdp) .pc .flip img, .stage-main img, .h3-sun, .o-candle .flame { will-change: transform; }

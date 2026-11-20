@@ -98,8 +98,10 @@
     return { x: ox + q[0] * dw, y: oy + q[1] * dh, c: [q[2], q[3], q[4]], vx: (Math.random() - 0.35) * 0.5, vy: -(0.5 + Math.random() * 1.6), r: (0.4 + Math.random() ** 2 * 2.4) * devicePixelRatio, l: 1, f: 0.004 + Math.random() * 0.008, w: Math.random() * 6, hz: 0.04 + Math.random() * 0.08 };
   };
   const heat = $('#heatT'), dmap = $('#heatD'), live = $('.hero-bg img.live'); let t0 = 0;
+  let fireOn = true, fc = 0;
   (function tick(ts) {
-    if (document.body.classList.contains('lit') && scrollY < innerHeight * 1.2) {
+    if (fc++ % 30 === 0) fireOn = cv.getClientRects().length > 0 && getComputedStyle(cv).display !== 'none';
+    if (fireOn && !document.hidden && document.body.classList.contains('lit') && scrollY < innerHeight * 1.2) {
       // heat shimmer: drift the noise so the real flames lick upward, a little harder on the beat of play
       t0 += au.paused ? 1 : 1.6;
       heat.setAttribute('baseFrequency', `${0.009 + Math.sin(t0 / 90) * 0.0015} ${0.032 + Math.sin(t0 / 37) * 0.006}`);
@@ -366,10 +368,19 @@
   $('#portrait').onmouseleave = () => (pi.style.transform = '');
   const bio = $('.bio'); bio.innerHTML = bio.innerHTML.split(/(\s+|<[^>]+>)/).map(w => (/^\s*$|^</.test(w) ? w : `<span class="w">${w}</span>`)).join('');
   const words = $$('.bio .w'), spray = $('#spray');
-  addEventListener('scroll', () => {
+  let bioQ = false;
+  const bioPaint = () => {
+    bioQ = false;
     const r = bio.getBoundingClientRect(), k = Math.min(1, Math.max(0, (innerHeight * 0.9 - r.top) / (innerHeight * 0.6)));
     words.forEach((w, i) => w.classList.toggle('in', i / words.length < k));
     const s = spray.getBoundingClientRect(), q = Math.min(1, Math.max(0, (innerHeight - s.top) / (innerHeight * 0.55)));
     spray.style.setProperty('--s', q * 108 - 8 + '%');
-  }, { passive: true });
+  };
+  addEventListener('scroll', () => { if (!bioQ) { bioQ = true; requestAnimationFrame(bioPaint); } }, { passive: true });
+
+  // ---------- pause looping animations in sections that aren't on screen ----------
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(es => es.forEach(e => e.target.classList.toggle('offscreen', !e.isIntersecting)), { rootMargin: '200px 0px' });
+    $$('body > section, body > footer, main > section').forEach(s => io.observe(s));
+  }
 })();
