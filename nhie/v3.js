@@ -153,7 +153,7 @@
   const ALBUM_OF = Object.fromEntries(SHOP.map(([h, a]) => [h, a])), VC = Object.fromEntries(SHOP.map(([h, , c]) => [h, c]));
   const short = s => ({ Small: 'S', Medium: 'M', Large: 'L', 'X-Large': 'XL', 'XX-Large': 'XXL' }[s] || s);
   // Mayumi candles aren't sold in this store: they always show as available and link to the candle page
-  const MAYUMI = 'https://mikeintech.github.io/mayumi-candles/';
+  const MAYUMI = 'https://mayumicandles.com/';
   const CANDLE = { 'mayumi-candle-never-have-i-ever': ['Mayumi Candle · Never Have I Ever', 4500, 'nhie'], 'mayumi-candle-forever-lasting': ['Mayumi Candle · Forever Lasting', 4500, 'forever-lasting'] };
   window.__mayumi = h => MAYUMI + '#' + (CANDLE[h] ? CANDLE[h][2] : '');
   const candleCard = (h, n) => { const [t, pr, id] = CANDLE[h], u = MAYUMI + '#' + id;
